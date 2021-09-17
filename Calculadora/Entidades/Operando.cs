@@ -10,16 +10,27 @@ namespace Entidades
     {
         private double numero;
 
+        /// <summary>
+        /// Constructor por defecto. Inicializa el atributo numero en 0.
+        /// </summary>
         public Operando()
         {
-            numero = 0;
+            this.numero = 0;
         }
+
+        /// <summary>
+        /// Constructor que inicializa el numero con el valor ingresado como parametro
+        /// </summary>
+        /// <param name="numero">Un numero</param>
         public Operando(double numero)
             : this()
         {
             this.numero = numero;
         }
-        public Operando(string strNumero) : this() 
+
+
+        public Operando(string strNumero) 
+            : this() 
         {
             Numero = strNumero;
         }
@@ -31,7 +42,7 @@ namespace Entidades
         {
             set
             { 
-                numero = ValidarOperando(value);
+                this.numero = ValidarOperando(value);
             }
         }
 
@@ -57,22 +68,31 @@ namespace Entidades
             }
             return "Valor invalido";
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="numero"></param>
+        /// <returns></returns>
         public string DecimalBinario(double numero)
         {
+            numero = (int)numero;
             if(numero > 0)
             {
                 StringBuilder sb = new StringBuilder();
 
-                while (numero > 0)
+                while (numero > 1)
                 {
                     sb.Append(numero % 2);
                     numero /= 2;
                 }
                 sb.Append(1);
-                return sb.ToString();
+                
+                return new string(sb.ToString().Reverse().ToArray());
             }
             return "Valor invalido";
         }
+
         public string DecimalBinario(string numero)
         {
             return DecimalBinario(double.Parse(numero));
@@ -82,7 +102,7 @@ namespace Entidades
         /// Valida que el parametro ingresado sea un numero binario
         /// </summary>
         /// <param name="binario">Numero compuesto de 1s y 0s</param>
-        /// <returns>True si es binario, FALSE si no lo es.</returns>
+        /// <returns>TRUE si es binario, FALSE si no lo es.</returns>
         private bool EsBinario(string binario)
         {
             foreach (char digit in binario)
