@@ -21,5 +21,18 @@ namespace Calculadora
         {
 
         }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            Limpiar(sender, e);
+        }
+
+        private void Limpiar(object sender, EventArgs e)
+        {
+            txtNumero1.Clear();
+            txtNumero2.Clear();
+            cmbOperador.SelectedIndex = 0;
+            lblResultado.Text = "";
+        }
     }
 }
