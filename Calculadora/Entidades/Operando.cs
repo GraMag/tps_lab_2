@@ -54,6 +54,7 @@ namespace Entidades
         /// de lo contrario, "Valor no invalido".</returns>
         public static string BinarioDecimal(string binario)
         {
+
             double decimalNum = 0;
             if (EsBinario(binario))
             {
@@ -76,7 +77,20 @@ namespace Entidades
         /// <returns></returns>
         public static string DecimalBinario(double numero)
         {
-            if(numero > 0)
+            numero = Math.Abs(numero);
+            if (numero >= 1)
+            {
+                StringBuilder numeroBinario = new StringBuilder();
+                while (numero > 1)
+                {
+                    numeroBinario.Insert(0, (int)numero % 2);
+                    numero = (int)numero / 2;
+                }
+                numeroBinario.Insert(0, "1");
+                return numeroBinario.ToString();
+            }
+            /*
+            if (numero > 0)
             {
                 StringBuilder sb = new StringBuilder();
 
@@ -88,7 +102,7 @@ namespace Entidades
                 sb.Append(1);
                 
                 return new string(sb.ToString().Reverse().ToArray());
-            }
+            }*/
             return "Valor invalido";
         }
 

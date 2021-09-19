@@ -29,6 +29,7 @@ namespace MiCalculadora
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCalculadora));
             this.lblResultado = new System.Windows.Forms.Label();
             this.txtNumero1 = new System.Windows.Forms.TextBox();
             this.txtNumero2 = new System.Windows.Forms.TextBox();
@@ -39,25 +40,31 @@ namespace MiCalculadora
             this.btnConvertirABinario = new System.Windows.Forms.Button();
             this.btnConvertirADecimal = new System.Windows.Forms.Button();
             this.lstOperaciones = new System.Windows.Forms.ListBox();
-            this.btnDarkMode = new System.Windows.Forms.Button();
+            this.pboxModoClaro = new System.Windows.Forms.PictureBox();
+            this.pboxModoOscuro = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxModoClaro)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxModoOscuro)).BeginInit();
             this.SuspendLayout();
             // 
             // lblResultado
             // 
-            this.lblResultado.AutoSize = true;
-            this.lblResultado.Location = new System.Drawing.Point(172, 37);
+            this.lblResultado.Location = new System.Drawing.Point(13, 37);
             this.lblResultado.Name = "lblResultado";
-            this.lblResultado.Size = new System.Drawing.Size(13, 20);
+            this.lblResultado.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lblResultado.Size = new System.Drawing.Size(335, 33);
             this.lblResultado.TabIndex = 0;
             this.lblResultado.Text = " ";
+            this.lblResultado.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtNumero1
             // 
             this.txtNumero1.Location = new System.Drawing.Point(13, 96);
             this.txtNumero1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtNumero1.Name = "txtNumero1";
+            this.txtNumero1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtNumero1.Size = new System.Drawing.Size(130, 27);
             this.txtNumero1.TabIndex = 1;
+            this.txtNumero1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtNumero2
             // 
@@ -66,6 +73,7 @@ namespace MiCalculadora
             this.txtNumero2.Name = "txtNumero2";
             this.txtNumero2.Size = new System.Drawing.Size(130, 27);
             this.txtNumero2.TabIndex = 3;
+            this.txtNumero2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // cmbOperador
             // 
@@ -152,16 +160,28 @@ namespace MiCalculadora
             this.lstOperaciones.Size = new System.Drawing.Size(172, 264);
             this.lstOperaciones.TabIndex = 9;
             // 
-            // btnDarkMode
+            // pboxModoClaro
             // 
-            this.btnDarkMode.BackColor = System.Drawing.Color.Gainsboro;
-            this.btnDarkMode.Location = new System.Drawing.Point(8, 9);
-            this.btnDarkMode.Name = "btnDarkMode";
-            this.btnDarkMode.Size = new System.Drawing.Size(27, 28);
-            this.btnDarkMode.TabIndex = 10;
-            this.btnDarkMode.Text = "button1";
-            this.btnDarkMode.UseVisualStyleBackColor = false;
-            this.btnDarkMode.Click += new System.EventHandler(this.btnDarkMode_Click);
+            this.pboxModoClaro.Image = ((System.Drawing.Image)(resources.GetObject("pboxModoClaro.Image")));
+            this.pboxModoClaro.Location = new System.Drawing.Point(12, 12);
+            this.pboxModoClaro.Name = "pboxModoClaro";
+            this.pboxModoClaro.Size = new System.Drawing.Size(32, 20);
+            this.pboxModoClaro.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pboxModoClaro.TabIndex = 11;
+            this.pboxModoClaro.TabStop = false;
+            this.pboxModoClaro.Click += new System.EventHandler(this.ModoClaro_Click);
+            // 
+            // pboxModoOscuro
+            // 
+            this.pboxModoOscuro.Image = ((System.Drawing.Image)(resources.GetObject("pboxModoOscuro.Image")));
+            this.pboxModoOscuro.Location = new System.Drawing.Point(13, 12);
+            this.pboxModoOscuro.Name = "pboxModoOscuro";
+            this.pboxModoOscuro.Size = new System.Drawing.Size(32, 20);
+            this.pboxModoOscuro.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pboxModoOscuro.TabIndex = 12;
+            this.pboxModoOscuro.TabStop = false;
+            this.pboxModoOscuro.Visible = false;
+            this.pboxModoOscuro.Click += new System.EventHandler(this.ModoClaro_Click);
             // 
             // FormCalculadora
             // 
@@ -169,7 +189,8 @@ namespace MiCalculadora
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(550, 297);
-            this.Controls.Add(this.btnDarkMode);
+            this.Controls.Add(this.pboxModoOscuro);
+            this.Controls.Add(this.pboxModoClaro);
             this.Controls.Add(this.lstOperaciones);
             this.Controls.Add(this.btnConvertirADecimal);
             this.Controls.Add(this.btnConvertirABinario);
@@ -190,6 +211,8 @@ namespace MiCalculadora
             this.Text = "Calculadora de Magali Gracia del curso 2°E ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormCalculadora_FormClosing);
             this.Load += new System.EventHandler(this.btnLimpiar_Click);
+            ((System.ComponentModel.ISupportInitialize)(this.pboxModoClaro)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxModoOscuro)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,7 +230,8 @@ namespace MiCalculadora
         private System.Windows.Forms.Button btnConvertirABinario;
         private System.Windows.Forms.Button btnConvertirADecimal;
         private System.Windows.Forms.ListBox lstOperaciones;
-        private System.Windows.Forms.Button btnDarkMode;
+        private System.Windows.Forms.PictureBox pboxModoClaro;
+        private System.Windows.Forms.PictureBox pboxModoOscuro;
     }
 }
 

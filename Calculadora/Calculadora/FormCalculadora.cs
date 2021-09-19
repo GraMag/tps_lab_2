@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Entidades;
 
@@ -16,19 +10,89 @@ namespace MiCalculadora
         public FormCalculadora()
         {
             InitializeComponent();
-            this.ActivarBotonesConvertir(true);
         }
 
+        /// <summary>
+        /// Cierra el programa
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Realiza la operación guarda las operaciones
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOperar_Click(object sender, EventArgs e)
+        {
+            this.lblResultado.Text = Operar(this.txtNumero1.Text, this.txtNumero2.Text, this.cmbOperador.Text).ToString();
+            if(!(string.IsNullOrEmpty(this.txtNumero1.Text) && string.IsNullOrEmpty(this.txtNumero2.Text)))
+            {
+                if (string.IsNullOrEmpty(cmbOperador.Text))
+                {
+                    cmbOperador.Text = "+";
+                }
+                this.lstOperaciones.Items.Add($"{txtNumero1.Text} {cmbOperador.Text} {txtNumero2.Text} = {lblResultado.Text}");
+            }
+            this.ActivarBotonesConvertir(true);
+        }
+        
+        /// <summary>
+        /// Llama al metodo limpiar al clickear el boton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            Limpiar();
+            this.Limpiar();
+            this.ActivarBotonesConvertir(true);
         }
 
+        /// <summary>
+        /// Convierte el resultado de decimal a binario
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnConvertirABinario_Click(object sender, EventArgs e)
+        {
+            this.lblResultado.Text = Operando.DecimalBinario(this.lblResultado.Text);
+            this.ActivarBotonesConvertir(false);
+        }
+
+        /// <summary>
+        /// Convierte el resultado de binario a decimal
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnConvertirADecimal_Click(object sender, EventArgs e)
+        {
+            this.lblResultado.Text = Operando.BinarioDecimal(this.lblResultado.Text);
+            this.ActivarBotonesConvertir(true);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="numero1">Primer numero ingresado</param>
+        /// <param name="numero2">Segundo numero ingresado</param>
+        /// <param name="operador">Operador seleccionado</param>
+        /// <returns>Resultado de la operación</returns>
+        private static double Operar(string numero1, string numero2, string operador)
+        {
+           if (string.IsNullOrEmpty(operador))
+            {
+                operador = " ";
+            }
+            return Calculadora.Operar(new Operando(numero1), new Operando(numero2), operador[0]);
+        }
+
+        /// <summary>
+        /// Limpia los elementos del formulario
+        /// </summary>
         private void Limpiar()
         {
             this.txtNumero1.Clear();
@@ -37,36 +101,21 @@ namespace MiCalculadora
             this.lblResultado.Text = string.Empty;
         }
 
-        private void btnOperar_Click(object sender, EventArgs e)
-        {
-            this.lblResultado.Text = Operar(txtNumero1.Text, txtNumero2.Text, cmbOperador.Text).ToString();
-            this.lstOperaciones.Items.Add($"{txtNumero1.Text} {cmbOperador.Text} {txtNumero2.Text} = {lblResultado.Text}");
-        }
-
-        private static double Operar(string numero1, string numero2, string operador)
-        {
-            if (string.IsNullOrEmpty(operador))
-            {
-                operador = " ";
-            }
-            return Calculadora.Operar(new Operando(numero1), new Operando(numero2), operador[0]);
-        } 
-
-
-        private void btnConvertirABinario_Click(object sender, EventArgs e)
-        {
-            this.lblResultado.Text = Operando.DecimalBinario(this.lblResultado.Text);
-            this.ActivarBotonesConvertir(false);
-        }
-
-        private void btnConvertirADecimal_Click(object sender, EventArgs e)
-        {
-            this.lblResultado.Text = Operando.BinarioDecimal(this.lblResultado.Text);
-            this.ActivarBotonesConvertir(true);
-        }
-
         /// <summary>
-        /// Activa 
+        /// Pregunta al usuario si quiere cerrar el programa
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FormCalculadora_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Esta seguro que desea cerrar?", "Salir", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+            {
+                e.Cancel = true;
+            }
+        }
+        
+        /// <summary>
+        /// Activa y desactiva los botones de conversion
         /// </summary>
         /// <param name="status"></param>
         private void ActivarBotonesConvertir(bool status)
@@ -76,27 +125,36 @@ namespace MiCalculadora
         }
 
         /// <summary>
-        /// Pregunta al usuario si quiere cerrar
+        /// Activa y desactiva el modo oscuro modificando el color del fondo y los botones 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FormCalculadora_FormClosing(object sender, FormClosingEventArgs e)
+        private void ModoClaro_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Esta seguro que desea cerrar?", "Salir", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
-            {
-                e.Cancel = true;
-            } 
-        }
+            // Colores //
+            Color botonesModoClaro = Color.Gainsboro;
+            Color fondoModoClaro = Color.WhiteSmoke;
+            Color botonesModoOscuro = Color.DarkGray;
+            Color fondoModoOscuro = Color.FromArgb(38,38,38);
 
-        private void btnDarkMode_Click(object sender, EventArgs e)
-        {
-            this.BackColor = this.BackColor == Color.WhiteSmoke ? Color.Black : Color.WhiteSmoke;
-            this.btnOperar.BackColor = this.btnOperar.BackColor == Color.Gainsboro ? Color.DarkGray : Color.Gainsboro;
-            this.btnLimpiar.BackColor = this.btnLimpiar.BackColor == Color.Gainsboro ? Color.DarkGray : Color.Gainsboro;
-            this.btnCerrar.BackColor = this.btnCerrar.BackColor == Color.Gainsboro ? Color.DarkGray : Color.Gainsboro;
-            this.btnDarkMode.BackColor = this.btnDarkMode.BackColor == Color.Gainsboro ? Color.DarkGray : Color.Gainsboro;
-            this.btnConvertirABinario.BackColor = this.btnConvertirABinario.BackColor == Color.Gainsboro ? Color.DarkGray : Color.Gainsboro;
-            this.btnConvertirADecimal.BackColor = this.btnConvertirADecimal.BackColor == Color.Gainsboro ? Color.DarkGray : Color.Gainsboro;
+            this.BackColor = this.BackColor == fondoModoClaro ? fondoModoOscuro : fondoModoClaro;
+            this.btnOperar.BackColor = this.btnOperar.BackColor == botonesModoClaro ? botonesModoOscuro : botonesModoClaro;
+            this.btnLimpiar.BackColor = this.btnLimpiar.BackColor == botonesModoClaro ? botonesModoOscuro : botonesModoClaro;
+            this.btnCerrar.BackColor = this.btnCerrar.BackColor == botonesModoClaro ? botonesModoOscuro : botonesModoClaro;
+            this.btnConvertirABinario.BackColor = this.btnConvertirABinario.BackColor == botonesModoClaro ? botonesModoOscuro : botonesModoClaro;
+            this.btnConvertirADecimal.BackColor = this.btnConvertirADecimal.BackColor == botonesModoClaro ? botonesModoOscuro : botonesModoClaro;
+
+            // Boton on/off //
+            if (this.pboxModoClaro.Visible == true)
+            {
+                this.pboxModoClaro.Visible = false;
+                this.pboxModoOscuro.Visible = true;
+            }
+            else if (this.pboxModoOscuro.Visible == true)
+            {
+                this.pboxModoClaro.Visible = true;
+                this.pboxModoOscuro.Visible = false;
+            }
         }
     }
 }
