@@ -52,7 +52,7 @@ namespace Entidades
         /// <param name="binario">Numero binario</param>
         /// <returns>Si es posible retornará un numero decimal,
         /// de lo contrario, "Valor no invalido".</returns>
-        public string BinarioDecimal(string binario)
+        public static string BinarioDecimal(string binario)
         {
             double decimalNum = 0;
             if (EsBinario(binario))
@@ -74,14 +74,13 @@ namespace Entidades
         /// </summary>
         /// <param name="numero"></param>
         /// <returns></returns>
-        public string DecimalBinario(double numero)
+        public static string DecimalBinario(double numero)
         {
-            numero = (int)numero;
             if(numero > 0)
             {
                 StringBuilder sb = new StringBuilder();
 
-                while (numero > 1)
+                while ((int)numero > 1)
                 {
                     sb.Append(numero % 2);
                     numero /= 2;
@@ -93,9 +92,10 @@ namespace Entidades
             return "Valor invalido";
         }
 
-        public string DecimalBinario(string numero)
+        public static string DecimalBinario(string numero)
         {
-            return DecimalBinario(double.Parse(numero));
+            double.TryParse(numero, out double resultado);
+            return DecimalBinario(resultado);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Entidades
         /// </summary>
         /// <param name="binario">Numero compuesto de 1s y 0s</param>
         /// <returns>TRUE si es binario, FALSE si no lo es.</returns>
-        private bool EsBinario(string binario)
+        private static bool EsBinario(string binario)
         {
             foreach (char digit in binario)
             {

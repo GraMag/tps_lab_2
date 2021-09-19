@@ -33,7 +33,7 @@ namespace Entidades
         /// <returns>El mismo operador si es valido. Valor default: +/returns>
         private static char ValidarOperador(char operador)
         {
-            return (operador != '-' && operador != '*' && operador != '/') ? operador : '+';
+            return (operador == '-' || operador == '*' || operador == '/') ? operador : '+';
         }
     }
 }

@@ -39,8 +39,8 @@ namespace MiCalculadora
 
         private void btnOperar_Click(object sender, EventArgs e)
         {
-            this.lblResultado.Text = Operar(txtNumero1.Text, txtNumero2.Text, cmbOperador.Text).ToString("#,00");
-            this.lstOperaciones.Text = $"{txtNumero1.Text} {cmbOperador.Text} {txtNumero2.Text} = {lblResultado.Text}";
+            this.lblResultado.Text = Operar(txtNumero1.Text, txtNumero2.Text, cmbOperador.Text).ToString();
+            this.lstOperaciones.Items.Add($"{txtNumero1.Text} {cmbOperador.Text} {txtNumero2.Text} = {lblResultado.Text}");
         }
 
         private static double Operar(string numero1, string numero2, string operador)
@@ -64,27 +64,39 @@ namespace MiCalculadora
             this.lblResultado.Text = Operando.BinarioDecimal(this.lblResultado.Text);
             this.ActivarBotonesConvertir(true);
         }
+
+        /// <summary>
+        /// Activa 
+        /// </summary>
+        /// <param name="status"></param>
         private void ActivarBotonesConvertir(bool status)
         {
-            if (status)
-            {
-                this.btnConvertirADecimal.Enabled = false;
-                this.btnConvertirABinario.Enabled = true;
-            }
-            else
-            {
-                this.btnConvertirADecimal.Enabled = true;
-                this.btnConvertirABinario.Enabled = false;
-            }
+            this.btnConvertirADecimal.Enabled = status ? false : true;
+            this.btnConvertirABinario.Enabled = status ? true : false;
         }
 
-        /*private void FormCalculadora_FormClosing(object sender, FormClosingEventArgs e)
+        /// <summary>
+        /// Pregunta al usuario si quiere cerrar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FormCalculadora_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult restult = MessageBox.Show("Esta seguro que desea cerrar?", "Salir", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if (restult == DialogResult.OK)
+            if(MessageBox.Show("Esta seguro que desea cerrar?", "Salir", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
             {
-                this.Dispose();
-            }
-        }*/
+                e.Cancel = true;
+            } 
+        }
+
+        private void btnDarkMode_Click(object sender, EventArgs e)
+        {
+            this.BackColor = this.BackColor == Color.WhiteSmoke ? Color.Black : Color.WhiteSmoke;
+            this.btnOperar.BackColor = this.btnOperar.BackColor == Color.Gainsboro ? Color.DarkGray : Color.Gainsboro;
+            this.btnLimpiar.BackColor = this.btnLimpiar.BackColor == Color.Gainsboro ? Color.DarkGray : Color.Gainsboro;
+            this.btnCerrar.BackColor = this.btnCerrar.BackColor == Color.Gainsboro ? Color.DarkGray : Color.Gainsboro;
+            this.btnDarkMode.BackColor = this.btnDarkMode.BackColor == Color.Gainsboro ? Color.DarkGray : Color.Gainsboro;
+            this.btnConvertirABinario.BackColor = this.btnConvertirABinario.BackColor == Color.Gainsboro ? Color.DarkGray : Color.Gainsboro;
+            this.btnConvertirADecimal.BackColor = this.btnConvertirADecimal.BackColor == Color.Gainsboro ? Color.DarkGray : Color.Gainsboro;
+        }
     }
 }
