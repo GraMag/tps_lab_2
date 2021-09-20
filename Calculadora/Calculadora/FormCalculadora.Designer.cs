@@ -154,6 +154,7 @@ namespace MiCalculadora
             // lstOperaciones
             // 
             this.lstOperaciones.FormattingEnabled = true;
+            this.lstOperaciones.HorizontalScrollbar = true;
             this.lstOperaciones.ItemHeight = 20;
             this.lstOperaciones.Location = new System.Drawing.Point(366, 17);
             this.lstOperaciones.Name = "lstOperaciones";

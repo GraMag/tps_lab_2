@@ -32,7 +32,7 @@ namespace Entidades
         public Operando(string strNumero) 
             : this() 
         {
-            Numero = strNumero;
+            this.Numero = strNumero;
         }
 
         /// <summary>
@@ -54,11 +54,9 @@ namespace Entidades
         /// de lo contrario, "Valor no invalido".</returns>
         public static string BinarioDecimal(string binario)
         {
-
-            double decimalNum = 0;
             if (EsBinario(binario))
             {
-                ///////// VER DE HACERLO CON FOR A VER SI QUEDA MAS CHIQUI
+                double decimalNum = 0;
                 double exponente = binario.Length-1;
                 foreach (char item in binario)
                 {
@@ -71,41 +69,34 @@ namespace Entidades
         }
 
         /// <summary>
-        /// 
+        /// Convierte el numero de decimal a binario
         /// </summary>
         /// <param name="numero"></param>
-        /// <returns></returns>
+        /// <returns>Si es posible retornará un numero binario,
+        /// de lo contrario, "Valor no invalido".</returns>
         public static string DecimalBinario(double numero)
         {
-            numero = Math.Abs(numero);
-            if (numero >= 1)
+            int numeroEntero = (int)numero;
+            if (numero > 0)
             {
                 StringBuilder numeroBinario = new StringBuilder();
-                while (numero > 1)
+                while (numeroEntero > 1)
                 {
-                    numeroBinario.Insert(0, (int)numero % 2);
-                    numero = (int)numero / 2;
+                    numeroBinario.Insert(0, numeroEntero % 2);
+                    numeroEntero /= 2;
                 }
                 numeroBinario.Insert(0, "1");
                 return numeroBinario.ToString();
             }
-            /*
-            if (numero > 0)
-            {
-                StringBuilder sb = new StringBuilder();
-
-                while ((int)numero > 1)
-                {
-                    sb.Append(numero % 2);
-                    numero /= 2;
-                }
-                sb.Append(1);
-                
-                return new string(sb.ToString().Reverse().ToArray());
-            }*/
             return "Valor invalido";
         }
 
+        /// <summary>
+        /// Convierte el numero de decimal a binario
+        /// </summary>
+        /// <param name="numero"></param>
+        /// <returns>Si es posible retornará un numero binario,
+        /// de lo contrario, "Valor no invalido".</returns>
         public static string DecimalBinario(string numero)
         {
             double.TryParse(numero, out double resultado);
@@ -136,6 +127,10 @@ namespace Entidades
         /// <returns>Numero en formato string parseado a double. Si no es un numero, se retornará 0</returns>
         private static double ValidarOperando(string strNumero)
         {
+            if (strNumero.Contains("."))
+            {
+                strNumero = strNumero.Replace('.', ',');
+            }
             double.TryParse(strNumero, out double numero);
             return numero;
         }

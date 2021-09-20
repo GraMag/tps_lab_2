@@ -29,14 +29,18 @@ namespace MiCalculadora
         /// <param name="e"></param>
         private void btnOperar_Click(object sender, EventArgs e)
         {
-            this.lblResultado.Text = Operar(this.txtNumero1.Text, this.txtNumero2.Text, this.cmbOperador.Text).ToString();
-            if(!(string.IsNullOrEmpty(this.txtNumero1.Text) && string.IsNullOrEmpty(this.txtNumero2.Text)))
+            string numero1 = this.txtNumero1.Text;
+            string numero2 = this.txtNumero2.Text;
+            string operador = this.cmbOperador.Text;
+
+            this.lblResultado.Text = Operar(numero1, numero2, operador).ToString("0.###");
+            if(!(string.IsNullOrEmpty(numero1) && string.IsNullOrEmpty(numero2)))
             {
-                if (string.IsNullOrEmpty(cmbOperador.Text))
+                if(string.IsNullOrEmpty(operador) && !(string.IsNullOrEmpty(numero1) || string.IsNullOrEmpty(numero2)))
                 {
-                    cmbOperador.Text = "+";
+                    operador = "+";
                 }
-                this.lstOperaciones.Items.Add($"{txtNumero1.Text} {cmbOperador.Text} {txtNumero2.Text} = {lblResultado.Text}");
+                this.lstOperaciones.Items.Add($"{numero1} {operador} {numero2} = {this.lblResultado.Text}");
             }
             this.ActivarBotonesConvertir(true);
         }
@@ -84,9 +88,9 @@ namespace MiCalculadora
         private static double Operar(string numero1, string numero2, string operador)
         {
            if (string.IsNullOrEmpty(operador))
-            {
+           {
                 operador = " ";
-            }
+           }
             return Calculadora.Operar(new Operando(numero1), new Operando(numero2), operador[0]);
         }
 
